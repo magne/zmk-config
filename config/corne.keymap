@@ -20,6 +20,17 @@
 };
 
 / {
+        macros {
+                updir: updir {
+                        compatible = "zmk,behavior-macro";
+                        label = "ZM_updir";
+                        #binding-cells = <0>;
+                        wait-ms = <30>;
+                        tap-ms = <40>;
+                        bindings = <&kp DOT &kp DOT &kp FSLH>;
+                };
+        };
+
         behaviors {
                 hm: homerow_mods {
                         compatible = "zmk,behavior-hold-tap";
@@ -86,7 +97,7 @@
                         bindings = <
    &trans &kp EXCL  &kp LT    &kp GT   &kp DQT   &kp DOT    &kp AMPS  &none     &kp LBKT &kp RBKT &kp PRCNT &kp UNDER
    &trans &kp EXCL  &kp MINUS &kp PLUS &kp EQUAL &kp HASH   &kp PIPE  &kp COLON &kp LPAR &kp RPAR &kp QMARK &kp GRAVE
-   &trans &kp CARET &kp FSLH  &kp STAR &kp BSLH  &none      &kp TILDE &kp DLLR  &kp LBRC &kp RBRC &kp AT    &trans
+   &trans &kp CARET &kp FSLH  &kp STAR &kp BSLH  &updir     &kp TILDE &kp DLLR  &kp LBRC &kp RBRC &kp AT    &trans
                                      &trans &trans &trans   &trans &trans &trans
                         >;
                 };

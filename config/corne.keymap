@@ -20,6 +20,16 @@
 };
 
 / {
+        combos {
+                compatible = "zmk,combos";
+
+                combo_caps {
+                        timeout-ms = <25>;
+                        key-positions = <17 18>;
+                        bindings = <&caps_word>;
+                };
+        };
+
         macros {
                 updir: updir {
                         compatible = "zmk,behavior-macro";
@@ -95,7 +105,7 @@
 // |      |  ^  |  /  |  *  |  \  | --- |   |  ~  |  $  |  {  |  }  |  @  |     |
 //                    |     |     |     |   |     |     |     |
                         bindings = <
-   &trans &kp EXCL  &kp LT    &kp GT   &kp DQT   &kp DOT    &kp AMPS  &none     &kp LBKT &kp RBKT &kp PRCNT &kp UNDER
+   &trans &kp SQT   &kp LT    &kp GT   &kp DQT   &kp DOT    &kp AMPS  &none     &kp LBKT &kp RBKT &kp PRCNT &kp UNDER
    &trans &kp EXCL  &kp MINUS &kp PLUS &kp EQUAL &kp HASH   &kp PIPE  &kp COLON &kp LPAR &kp RPAR &kp QMARK &kp GRAVE
    &trans &kp CARET &kp FSLH  &kp STAR &kp BSLH  &updir     &kp TILDE &kp DLLR  &kp LBRC &kp RBRC &kp AT    &trans
                                      &trans &trans &trans   &trans &trans &trans

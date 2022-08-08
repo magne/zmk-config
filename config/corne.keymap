@@ -61,7 +61,7 @@
 // |  TAB |  Q  |  W  |  F  |  P  |  B  |   |  J  |  L   |  U  |  Y  |  ;  |  \   |
 // | BSPC |  A  |  R  |  S  |  T  |  G  |   |  M  |  N   |  E  |  I  |  O  |  '   |
 // | SHFT |  Z  |  X  |  C  |  D  |  V  |   |  K  |  H   |  ,  |  .  |  /  | ESC  |
-//                    | GUI | RSE | SPC |   | ENT | LWR  | ALT |
+//                   | CTRL | RSE | SPC |   | ENT | LWR  | RALT |
                         bindings = <
    &kp TAB   &kp      Q &kp      W &kp        F &kp       P &kp B   &kp J &kp       L  &kp        U &kp      Y &kp   SEMI &kp BSLH
    &kp BSPC  &hm LGUI A &hm LALT R &hm LSHIFT S &hm LCTRL T &kp G   &kp M &hm RCTRL N  &hm RSHIFT E &hm LALT I &hm RGUI O &kp SQT
@@ -92,7 +92,7 @@
 //                    |     |     |     |   |      |     |      |
                         bindings = <
    &trans &kp N0   &kp N1 &kp N2 &kp N3 &kp MINUS   &kp PG_UP &kp HOME &kp UP   &kp END   &kp ESC &kp BSPC
-   &trans &kp STAR &kp N4 &kp N5 &kp N6 &kp PLUS    &kp PG_DN &kp LEFT &kp DOWN &kp RIGHT &kp DEL &none
+   &trans &kp FSLH &kp N4 &kp N5 &kp N6 &kp PLUS    &kp PG_DN &kp LEFT &kp DOWN &kp RIGHT &kp DEL &none
    &trans &kp STAR &kp N7 &kp N8 &kp N9 &kp EQUAL   &none     &none    &none    &none     &none   &trans
                              &trans &trans &trans   &trans &trans &trans
                         >;
@@ -119,9 +119,9 @@
 // | RGB EFF | RGB HUD | RGB SAD | RGB BRD | RGB SPD | RGB EFR |   | --- |  ---  |  ---  | --- |   ---   |  ---  |
 //                                           |     |     |     |   |      |     |     |
                         bindings = <
-   &reset          &bootloader     &none           &none           &none           &none             &none &none &none &none &bootloader &reset
-   &rgb_ug RGB_TOG &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &rgb_ug RGB_SPI &none             &none &none &none &none &none       &none
-   &rgb_ug RGB_EFF &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &rgb_ug RGB_SPD &rgb_ug RGB_EFR   &none &none &none &none &none       &none
+   &reset          &bootloader     &none           &none           &none           &none             &none &none       &none      &none &bootloader &reset
+   &rgb_ug RGB_TOG &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &rgb_ug RGB_SPI &none             &none &to DEFAULT &to QWERTY &none &none       &none
+   &rgb_ug RGB_EFF &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &rgb_ug RGB_SPD &rgb_ug RGB_EFR   &none &none       &none      &none &none       &none
                                                                               &trans &trans &trans   &trans &trans &trans
                         >;
                 };

@@ -76,7 +76,7 @@
    &kp TAB   &kp      Q &kp      W &kp        F &kp       P &kp B   &kp J &kp       L  &kp        U &kp      Y &kp   SEMI &kp BSLH
    &kp BSPC  &hm LGUI A &hm LALT R &hm LSHIFT S &hm LCTRL T &kp G   &kp M &hm RCTRL N  &hm RSHIFT E &hm LALT I &hm RGUI O &kp SQT
    &kp LSHFT &kp      Z &kp      X &kp        C &kp       D &kp V   &kp K &kp       H  &kp    COMMA &kp    DOT &kp   FSLH &kp ESC
-                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &fn FN_KEYS RALT
+                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &fn RALT FN_KEYS
                         >;
                 };
 

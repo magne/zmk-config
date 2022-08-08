@@ -29,12 +29,6 @@
                         key-positions = <15 20>;
                         bindings = <&caps_word>;
                 };
-
-                combo_fn {
-                        timeout-ms = <25>;
-                        key-positions = <17 18>;
-                        bindings = <&tog FN_KEYS>;
-                };
         };
 
         macros {
@@ -58,6 +52,14 @@
                         flavor = "tap-preferred";
                         bindings = <&kp>, <&kp>;
                 };
+
+                td0: tap_dance_0 {
+                        compatible = "zmk,behavior-tap-dance";
+                        label = "TAP_DANCE_0";
+                        #binding-cells = <0>;
+                        tapping-term-ms = <200>;
+                        bindings = <&tog FN_KEYS>, <&kp RALT>;
+                };
         };
 
         keymap {
@@ -73,7 +75,7 @@
    &kp TAB   &kp      Q &kp      W &kp        F &kp       P &kp B   &kp J &kp       L  &kp        U &kp      Y &kp   SEMI &kp BSLH
    &kp BSPC  &hm LGUI A &hm LALT R &hm LSHIFT S &hm LCTRL T &kp G   &kp M &hm RCTRL N  &hm RSHIFT E &hm LALT I &hm RGUI O &kp SQT
    &kp LSHFT &kp      Z &kp      X &kp        C &kp       D &kp V   &kp K &kp       H  &kp    COMMA &kp    DOT &kp   FSLH &kp ESC
-                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &kp RALT
+                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &td0
                         >;
                 };
 
@@ -129,7 +131,7 @@
    &trans &none &kp F1 &kp F2  &kp F3  &kp F4  &none   &none  &none     &none      &none    &none    &none
    &trans &none &kp F5 &kp F6  &kp F7  &kp F8  &none   &none  &kp RCTRL &kp RSHIFT &kp LALT &kp RGUI &none
    &trans &none &kp F9 &kp F10 &kp F11 &kp F12 &none   &none  &none     &none      &none    &none    &tog FN_KEYS
-                                &trans &trans &trans   &trans &trans &trans
+                                &trans &trans &trans   &trans &trans &tog FN_KEYS
                         >;
                 };
 

@@ -16,6 +16,8 @@
 #define FN_KEYS 4
 #define ADJUST  5
 
+#define MO_TOG(layer) &mo_tog layer layer   // Macro to apply momentary-layer-on-hold/toggle-layer-on-tap to a specific layer
+
 &caps_word {
     continue-list = <UNDERSCORE BACKSPACE DELETE>;
 };
@@ -53,22 +55,22 @@
                         bindings = <&kp>, <&kp>;
                 };
 
-                tog_kp: behavior_kp_tog {
+                kp_tog: behavior_kp_tog {
                         compatible = "zmk,behavior-hold-tap";
                         label = "kp_tog";
                         #binding-cells = <2>;
                         tapping-term-ms = <200>;
                         flavor = "hold-preferred";
-                        bindings = <&tog>, <&kp>;
+                        bindings = <&kp>, <&tog>;
                 };
 
-                tog_mo: behavior_mo_tog {
+                mo_tog: behavior_mo_tog {
                         compatible = "zmk,behavior-hold-tap";
                         label = "mo_tog";
                         #binding-cells = <2>;
                         flavor = "hold-preferred";
                         tapping-term-ms = <200>;
-                        bindings = <&tog>, <&mo>;
+                        bindings = <&mo>, <&tog>;
                 };
 
         };
@@ -86,7 +88,7 @@
    &kp TAB   &kp      Q &kp      W &kp        F &kp       P &kp B   &kp J &kp       L  &kp        U &kp      Y &kp   SEMI &kp BSLH
    &kp BSPC  &hm LGUI A &hm LALT R &hm LSHIFT S &hm LCTRL T &kp G   &kp M &hm RCTRL N  &hm RSHIFT E &hm LALT I &hm RGUI O &kp SQT
    &kp LSHFT &kp      Z &kp      X &kp        C &kp       D &kp V   &kp K &kp       H  &kp    COMMA &kp    DOT &kp   FSLH &kp ESC
-                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &tog_mo FN_KEYS FN_KEYS     
+                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &kp_tog RALT FN_KEYS     
                         >;
                 };
 

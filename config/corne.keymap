@@ -13,7 +13,8 @@
 #define QWERTY  1
 #define LOWER   2
 #define RAISE   3
-#define ADJUST  4
+#define FN_KEYS 4
+#define ADJUST  5
 
 &caps_word {
     continue-list = <UNDERSCORE BACKSPACE DELETE>;
@@ -51,6 +52,15 @@
                         flavor = "tap-preferred";
                         bindings = <&kp>, <&kp>;
                 };
+                fn: fn_keys {
+                        compatible = "zmk,behavior-hold-tap";
+                        label = "FUNCTION_KEYS";
+                        #binding-cells = <2>;
+                        tapping-term-ms = <225>;
+                        quick-tap-ms = <0>;
+                        flavor = "tap-preferred";
+                        bindings = <&tog>, <&kp>;
+                };
         };
 
         keymap {
@@ -66,7 +76,7 @@
    &kp TAB   &kp      Q &kp      W &kp        F &kp       P &kp B   &kp J &kp       L  &kp        U &kp      Y &kp   SEMI &kp BSLH
    &kp BSPC  &hm LGUI A &hm LALT R &hm LSHIFT S &hm LCTRL T &kp G   &kp M &hm RCTRL N  &hm RSHIFT E &hm LALT I &hm RGUI O &kp SQT
    &kp LSHFT &kp      Z &kp      X &kp        C &kp       D &kp V   &kp K &kp       H  &kp    COMMA &kp    DOT &kp   FSLH &kp ESC
-                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER &kp RALT
+                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &fn FN_KEYS RALT
                         >;
                 };
 
@@ -112,8 +122,22 @@
                         >;
                 };
 
+                fn_layer {
+// ------------------------------------------------------------------------------------
+// |      |  F1  |  F2  |  F3  |  F4  | --- |   | --- | ---  | ---  | --- | --- | --- |
+// |      |  F5  |  F6  |  F7  |  F8  | --- |   | --- | CTRL | SHFT | ALT | GUI | --- |
+// |      |  F9  |  F10 |  F11 |  F12 | --- |   | --- | ---  | ---  | --- | --- |     |
+//                        |    |      |     |   |     |      | TOG  |
+                        bindings = <
+   &trans &none &kp F1 &kp F2  &kp F3  &kp F4  &none   &none  &none     &none      &none    &none    &none
+   &trans &none &kp F5 &kp F6  &kp F7  &kp F8  &none   &none  &kp RCTRL &kp RSHIFT &kp LALT &kp RGUI &none
+   &trans &none &kp F9 &kp N10 &kp F11 &kp F12 &none   &none  &none     &none      &none    &none    &trans
+                                &trans &trans &trans   &trans &trans &tog FN_KEYS
+                        >;
+                };
+
                 adjust_layer {
-// -----------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
 // | RESET   | BOOTLDR |   ---   |   ---   |   ---   |   ---   |   | --- |  ---  |  ---  | --- | BOOTLDR | RESET |
 // | RGB TGL | RGB HUI | RGB SAI | RGB BRI | RGB SPI |   ---   |   | --- | DEFLT | QWRTY | --- |   ---   |  ---  |
 // | RGB EFF | RGB HUD | RGB SAD | RGB BRD | RGB SPD | RGB EFR |   | --- |  ---  |  ---  | --- |   ---   |  ---  |

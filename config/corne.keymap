@@ -13,13 +13,58 @@
 #include <dt-bindings/zmk/outputs.h>
 
 
+/*
+ * Temporarily here because nice nano v2 spi is not defined on ZMk Yet
+ * Source: https://github.com/zmkfirmware/zmk/blob/main/app/boards/shields/corne/boards/nice_nano.overlay
+ * GitHub Issue: https://github.com/zmkfirmware/zmk/issues/885
+ */
+
+// #include <dt-bindings/led/led.h>
+// 
+// &spi1 {
+// 	compatible = "nordic,nrf-spim";
+// 	/* Cannot be used together with i2c0. */
+// 	status = "okay";
+// 	mosi-pin = <6>;
+// 	// Unused pins, needed for SPI definition, but not used by the ws2812 driver itself.
+// 	sck-pin = <5>;
+// 	miso-pin = <7>;
+// 
+// 	led_strip: ws2812@0 {
+// 		compatible = "worldsemi,ws2812-spi";
+// 		label = "SK6812mini";
+// 
+// 		/* SPI */
+// 		reg = <0>; /* ignored, but necessary for SPI bindings */
+// 		spi-max-frequency = <4000000>;
+// 
+// 		/* WS2812 */
+// 		chain-length = <6>; /* There are per-key RGB, but the first 6 are underglow */
+// 		spi-one-frame = <0x70>;
+// 		spi-zero-frame = <0x40>;
+// 
+// 		color-mapping = <LED_COLOR_ID_GREEN LED_COLOR_ID_RED LED_COLOR_ID_BLUE>;
+// 	};
+// };
+// 
+// / {
+// 	chosen {
+// 		zmk,underglow = &led_strip;
+// 	};
+// };
+
+/*
+ * End of temmporary code
+ */
+
 
 #define DEFAULT 0
 #define QWERTY  1
-#define LOWER   2
-#define RAISE   3
-#define FN_KEYS 4
-#define ADJUST  5
+#define VALHEIM 2
+#define LOWER   3
+#define RAISE   4
+#define FN_KEYS 5
+#define ADJUST  6
 
 #define MO_TOG(layer) &mo_tog layer layer   // Macro to apply momentary-layer-on-hold/toggle-layer-on-tap to a specific layer
 
@@ -32,7 +77,7 @@
                 compatible = "zmk,combos";
 
                 combo_caps {
-                        timeout-ms = <25>;
+                        timeout-ms = <30>;
                         key-positions = <15 20>;
                         bindings = <&caps_word>;
                 };
@@ -47,6 +92,14 @@
                         tap-ms = <40>;
                         bindings = <&kp DOT &kp DOT &kp FSLH>;
                 };
+                scope: scope {
+                        compatible = "zmk,behavior-macro";
+                        label = "ZM_scope";
+                        #binding-cells = <0>;
+                        wait-ms = <30>;
+                        tap-ms = <40>;
+                        bindings = <&kp COLON &kp COLON>;
+                };
         };
 
         behaviors {
@@ -54,7 +107,7 @@
                         compatible = "zmk,behavior-hold-tap";
                         label = "HOMEROW_MODS";
                         #binding-cells = <2>;
-                        tapping-term-ms = <225>;
+                        tapping-term-ms = <205>;
                         quick-tap-ms = <0>;
                         flavor = "tap-preferred";
                         bindings = <&kp>, <&kp>;
@@ -90,10 +143,10 @@
 // | SHFT |  Z  |  X  |  C  |  D  |  V  |   |  K  |  H   |  ,  |  .  |  /  | ESC  |
 //                   | CTRL | RSE | SPC |   | ENT | LWR  | RALT |
                         bindings = <
-   &kp TAB   &kp      Q &kp      W &kp        F &kp       P &kp B   &kp J &kp       L  &kp        U &kp      Y &kp   SEMI &kp BSLH
-   &kp BSPC  &hm LGUI A &hm LALT R &hm LSHIFT S &hm LCTRL T &kp G   &kp M &hm RCTRL N  &hm RSHIFT E &hm LALT I &hm RGUI O &kp SQT
-   &kp LSHFT &kp      Z &kp      X &kp        C &kp       D &kp V   &kp K &kp       H  &kp    COMMA &kp    DOT &kp   FSLH &kp ESC
-                                    &kp LCTRL &mo RAISE &kp SPACE   &kp RET &mo LOWER  &kp_tog RALT FN_KEYS     
+   &kp TAB   &kp      Q &kp      W &kp        F &kp       P &kp B       &kp J   &kp       L  &kp        U &kp      Y &kp   SEMI &kp BSLH
+   &kp BSPC  &hm LGUI A &hm LALT R &hm LSHIFT S &hm LCTRL T &kp G       &kp M   &hm RCTRL N  &hm RSHIFT E &hm LALT I &hm RGUI O &kp SQT
+   &kp LSHFT &kp      Z &kp      X &kp        C &kp       D &kp V       &kp K   &kp       H  &kp    COMMA &kp    DOT &kp   FSLH &kp ESC
+                                &mo_tog FN_KEYS FN_KEYS &mo   RAISE &kp SPACE   &kp RET &mo LOWER    &kp     RALT     
                         >;
                 };
 
@@ -104,9 +157,23 @@
 // |      |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M  |  ,  |  .  |  /  | ESC  |
 //                    |     |     |     |   |     |     |     |
                         bindings = <
-   &trans &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-   &trans &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-   &trans &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &trans
+   &trans &kp Q      &kp W      &kp E        &kp R       &kp T   &kp Y &kp U       &kp I        &kp O      &kp P         &kp BSPC
+   &trans &hm LGUI A &hm LALT S &hm LSHIFT D &hm LCTRL F &kp G   &kp H &hm RCTRL J &hm RSHIFT K &hm LALT L &hm RGUI SEMI &kp SQT
+   &trans &kp Z      &kp X      &kp C        &kp V       &kp B   &kp N &kp M       &kp COMMA    &kp DOT    &kp FSLH      &trans
+                   &trans &trans &trans   &trans &trans &trans
+                        >;
+                };
+
+                valheim_layer {
+// -------------------------------------------------------------------------------
+// | ESC  |  1  |  2  |  3  |  4  |  5  |   |  1  |  2  |  3  |  4  | --- | BKSP |
+// | TAB  |  M  |  Q  |  W  |  E  |  R  |   |  5  |  6  |  7  |  8  | --- | ---  |
+// |      |  X  |  A  |  S  |  D  |  F  |   | --- |  M  |  ,  |  .  | --- | ESC  |
+//                    |     |     |     |   |     |     |     |
+                        bindings = <
+   &kp ESC &kp N1 &kp N2 &kp N3 &kp N4 &kp N5   &kp N1 &kp N2  &kp N3     &kp N4  &none &kp BSPC
+   &kp TAB &kp M  &kp Q  &kp W  &kp E  &kp R    &kp N5 &kp N6  &kp N7     &kp N8  &none &none
+   &trans  &kp X  &kp A  &kp S  &kp D  &kp F    &none  &kp M   &kp COMMA  &kp DOT &none &trans
                    &trans &trans &trans   &trans &trans &trans
                         >;
                 };
@@ -118,21 +185,21 @@
 // |      |  *  |  7  |  8  |  9  |  =  |   | ---  | --- | ---  | --- | --- |     |
 //                    |     |     |     |   |      |     |      |
                         bindings = <
-   &trans &kp N0   &kp N1 &kp N2 &kp N3 &kp MINUS   &kp PG_UP &kp HOME &kp UP   &kp END   &kp ESC &kp BSPC
-   &trans &kp FSLH &kp N4 &kp N5 &kp N6 &kp PLUS    &kp PG_DN &kp LEFT &kp DOWN &kp RIGHT &kp DEL &none
-   &trans &kp STAR &kp N7 &kp N8 &kp N9 &kp EQUAL   &none     &none    &none    &none     &none   &trans
+   &trans &kp FSLH &kp N7 &kp N8 &kp N9 &kp MINUS   &kp PG_UP &kp HOME &kp UP   &kp END   &kp ESC &kp BSPC
+   &trans &kp STAR &kp N4 &kp N5 &kp N6 &kp PLUS    &kp PG_DN &kp LEFT &kp DOWN &kp RIGHT &kp DEL &none
+   &trans &kp N0   &kp N1 &kp N2 &kp N3 &kp EQUAL   &none     &none    &none    &none     &none   &trans
                              &trans &trans &trans   &trans &trans &trans
                         >;
                 };
 
                 raise_layer {
 // -----------------------------------------------------------------------------------------
-// |      |  '  |  <  |  >  |  "  |  .  |   |  &  | --- |  [  |  ]  |  %  |  _  |
+// |      |  '  |  <  |  >  |  "  |  .  |   |  &  | ::  |  [  |  ]  |  %  |  _  |
 // |      |  !  |  -  |  +  |  =  |  #  |   | "|" |  :  |  (  |  )  |  ?  |  `  |
-// |      |  ^  |  /  |  *  |  \  | --- |   |  ~  |  $  |  {  |  }  |  @  |     |
+// |      |  ^  |  /  |  *  |  \  | ../ |   |  ~  |  $  |  {  |  }  |  @  |     |
 //                    |     |     |     |   |     |     |     |
                         bindings = <
-   &trans &kp SQT   &kp LT    &kp GT   &kp DQT   &kp DOT    &kp AMPS  &none     &kp LBKT &kp RBKT &kp PRCNT &kp UNDER
+   &trans &kp SQT   &kp LT    &kp GT   &kp DQT   &kp DOT    &kp AMPS  &scope    &kp LBKT &kp RBKT &kp PRCNT &kp UNDER
    &trans &kp EXCL  &kp MINUS &kp PLUS &kp EQUAL &kp HASH   &kp PIPE  &kp COLON &kp LPAR &kp RPAR &kp QMARK &kp GRAVE
    &trans &kp CARET &kp FSLH  &kp STAR &kp BSLH  &updir     &kp TILDE &kp DLLR  &kp LBRC &kp RBRC &kp AT    &trans
                                      &trans &trans &trans   &trans &trans &trans
@@ -157,12 +224,12 @@
 // ---------------------------------------------------------------------------------------------------------------
 // | RESET   | BOOTLDR |   ---   |   ---   |   ---   |   ---   |   | --- |  ---  |  ---  | --- | BOOTLDR | RESET |
 // | RGB TGL | RGB HUI | RGB SAI | RGB BRI | RGB SPI |   ---   |   | --- | DEFLT | QWRTY | --- |   ---   |  ---  |
-// | RGB EFF | RGB HUD | RGB SAD | RGB BRD | RGB SPD | RGB EFR |   | --- |  ---  |  ---  | --- |   ---   |  ---  |
+// | RGB EFF | RGB HUD | RGB SAD | RGB BRD | RGB SPD | RGB EFR |   | --- |  ---  | VLHEM | --- |   ---   |  ---  |
 //                                           |     |     |     |   |      |     |     |
                         bindings = <
-   &reset          &bootloader     &bt BT_CLR      &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2        &ext_power EP_OFF &none       &none      &out OUT_USB &bootloader &reset
-   &rgb_ug RGB_TOG &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &rgb_ug RGB_SPI &none               &ext_power EP_ON  &to DEFAULT &to QWERTY &out OUT_BLE &none       &none
-   &rgb_ug RGB_EFF &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &rgb_ug RGB_SPD &rgb_ug RGB_EFR     &ext_power EP_TOG &none       &none      &out OUT_TOG &none       &none
+   &sys_reset          &bootloader     &bt BT_CLR      &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2        &ext_power EP_OFF &none       &none       &out OUT_USB &bootloader &sys_reset
+   &rgb_ug RGB_TOG     &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &rgb_ug RGB_SPI &none               &ext_power EP_ON  &to DEFAULT &to QWERTY  &out OUT_BLE &none       &none
+   &rgb_ug RGB_EFF     &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &rgb_ug RGB_SPD &rgb_ug RGB_EFR     &ext_power EP_TOG &none       &to VALHEIM &out OUT_TOG &none       &none
                                                                                 &trans &trans &trans   &trans &trans &trans
                         >;
                 };

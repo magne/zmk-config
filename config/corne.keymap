@@ -86,7 +86,6 @@
         macros {
                 updir: updir {
                         compatible = "zmk,behavior-macro";
-                        label = "ZM_updir";
                         #binding-cells = <0>;
                         wait-ms = <30>;
                         tap-ms = <40>;
@@ -94,7 +93,6 @@
                 };
                 scope: scope {
                         compatible = "zmk,behavior-macro";
-                        label = "ZM_scope";
                         #binding-cells = <0>;
                         wait-ms = <30>;
                         tap-ms = <40>;
@@ -105,7 +103,6 @@
         behaviors {
                 hm: homerow_mods {
                         compatible = "zmk,behavior-hold-tap";
-                        label = "HOMEROW_MODS";
                         #binding-cells = <2>;
                         tapping-term-ms = <205>;
                         quick-tap-ms = <0>;
@@ -115,7 +112,6 @@
 
                 kp_tog: behavior_kp_tog {
                         compatible = "zmk,behavior-hold-tap";
-                        label = "kp_tog";
                         #binding-cells = <2>;
                         tapping-term-ms = <200>;
                         flavor = "hold-preferred";
@@ -124,7 +120,6 @@
 
                 mo_tog: behavior_mo_tog {
                         compatible = "zmk,behavior-hold-tap";
-                        label = "mo_tog";
                         #binding-cells = <2>;
                         flavor = "hold-preferred";
                         tapping-term-ms = <200>;
